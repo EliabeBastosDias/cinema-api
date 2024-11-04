@@ -1,0 +1,463 @@
+openapi: 3.0.1
+info:
+  title: Cinema API
+  description: API for managing movies, sessions, and threaters in the cinema system
+  version: 1.0.0
+
+paths:
+  /movies:
+    get:
+      summary: List all movies
+      description: Retrieve a list of all movies
+      responses:
+        '200':
+          description: A list of movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create a new movie
+      description: Create a new movie with the provided details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieParams'
+      responses:
+        '200':
+          description: Movie created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+  /movies/{movieToken}:
+    get:
+      summary: Get a movie
+      description: Retrieve details of a specific movie by its token
+      parameters:
+        - name: movieToken
+          in: path
+          required: true
+          description: The token of the movie to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update a movie
+      description: Update the details of an existing movie
+      parameters:
+        - name: movieToken
+          in: path
+          required: true
+          description: The token of the movie to be updated
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMovieParams'
+      responses:
+        '200':
+          description: Movie updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+
+  /movies/{movieToken}/inactivate:
+    put:
+      summary: Inactivate a movie
+      description: Mark a movie as inactive
+      parameters:
+        - name: movieToken
+          in: path
+          required: true
+          description: The token of the movie to be inactivated
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie inactivated successfully
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+
+  /sessions:
+    get:
+      summary: List all sessions
+      description: Retrieve a list of all sessions
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number for pagination
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of sessions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create a new session
+      description: Create a new session with the provided details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionParams'
+      responses:
+        '200':
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+  /sessions/{sessionToken}:
+    get:
+      summary: Get a session
+      description: Retrieve details of a specific session by its token
+      parameters:
+        - name: sessionToken
+          in: path
+          required: true
+          description: The token of the session to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Session details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '404':
+          description: Session not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update a session
+      description: Update the details of an existing session
+      parameters:
+        - name: sessionToken
+          in: path
+          required: true
+          description: The token of the session to be updated
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSessionParams'
+      responses:
+        '200':
+          description: Session updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Session not found
+        '500':
+          description: Internal server error
+
+  /sessions/{sessionToken}/inactivate:
+    put:
+      summary: Inactivate a session
+      description: Mark a session as inactive
+      parameters:
+        - name: sessionToken
+          in: path
+          required: true
+          description: The token of the session to be inactivated
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Session inactivated successfully
+        '404':
+          description: Session not found
+        '500':
+          description: Internal server error
+
+  /threaters:
+    get:
+      summary: List all threaters
+      description: Retrieve a list of all threaters
+      responses:
+        '200':
+          description: A list of threaters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Threater'
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create a new threater
+      description: Create a new threater with the provided details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateThreaterParams'
+      responses:
+        '200':
+          description: Threater created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Threater'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+  /threaters/{threaterToken}:
+    get:
+      summary: Get a threater
+      description: Retrieve details of a specific threater by its token
+      parameters:
+        - name: threaterToken
+          in: path
+          required: true
+          description: The token of the threater to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Threater details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Threater'
+        '404':
+          description: Threater not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update a threater
+      description: Update the details of an existing threater
+      parameters:
+        - name: threaterToken
+          in: path
+          required: true
+          description: The token of the threater to be updated
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThreaterParams'
+      responses:
+        '200':
+          description: Threater updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Threater not found
+        '500':
+          description: Internal server error
+
+  /threaters/{threaterToken}/inactivate:
+    put:
+      summary: Inactivate a threater
+      description: Mark a threater as inactive
+      parameters:
+        - name: threaterToken
+          in: path
+          required: true
+          description: The token of the threater to be inactivated
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Threater inactivated successfully
+        '404':
+          description: Threater not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The movie token
+        name:
+          type: string
+          description: The name of the movie
+        director:
+          type: string
+          description: The director of the movie
+        duration:
+          type: integer
+          description: The duration of the movie in minutes
+
+    CreateMovieParams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the movie
+          example: "Inception"
+        director:
+          type: string
+          description: Director of the movie
+          example: "Christopher Nolan"
+        duration:
+          type: integer
+          description: Duration of the movie in minutes
+          example: 148
+
+    UpdateMovieParams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the movie
+          example: "Inception"
+        director:
+          type: string
+          description: Director of the movie
+          example: "Christopher Nolan"
+        duration:
+          type: integer
+          description: Duration of the movie in minutes
+          example: 148
+
+    Session:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The session token
+        movieToken:
+          type: string
+          description: The movie token
+        threaterToken:
+          type: string
+          description: The threater token
+        sessionDatetime:
+          type: string
+          format: date-time
+          description: The date and time of the session
+
+    CreateSessionParams:
+      type: object
+      properties:
+        movieToken:
+          type: string
+          description: The movie token
+        threaterToken:
+          type: string
+          description: The threater token
+        sessionDatetime:
+          type: string
+          format: date-time
+          description: The date and time of the session
+
+    UpdateSessionParams:
+      type: object
+      properties:
+        sessionToken:
+          type: string
+          description: The session token
+        movieToken:
+          type: string
+          description: The movie token
+        threaterToken:
+          type: string
+          description: The threater token
+        sessionDatetime:
+          type: string
+          format: date-time
+          description: The date and time of the session
+
+    Threater:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The threater token
+        number:
+          type: integer
+          description: The number of the threater
+        description:
+          type: string
+          description: Description of the threater
+
+    CreateThreaterParams:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: The number of the threater
+          example: 1
+        description:
+          type: string
+          description: Description of the threater
+          example: "Main hall"
+
+    UpdateThreaterParams:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: The number of the threater
+          example: 1
+        description:
+          type: string
+          description: Description of the threater
+          example: "Main hall"
