@@ -1,6 +1,12 @@
 # Cinema API
 
+✅ Banco Postgres
+
 ✅ Criação de testes unitários
+
+✅ Login por JWT e autenticação de endpoints
+
+✅ OpenSearch, RabbitMQ, Apache
 
 ✅ Utilização do banco mysql
 Criação com docker usando migrations e seeders
